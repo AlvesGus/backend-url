@@ -65,7 +65,7 @@ app.get('/url/get-all', async (req, res) => {
 app.post('/url/create', async (req, res) => {
   const { url_original } = req.body
   const hash = generateShortUrl()
-  const base_url = 'brev.ly'
+  const base_url = 'https://backend-url-beta.vercel.app'
 
   if (!url_original) {
     return res.status(400).send('Error: Missing original URL')
@@ -87,7 +87,8 @@ app.post('/url/create', async (req, res) => {
       select: {
         id: true,
         url_original: true,
-        hash: true
+        hash: true,
+        url_short: true
       }
     })
     return res.status(201).send(urlShortner)
@@ -124,9 +125,11 @@ app.delete('/url/delete/:id', async (req, res) => {
 
 app.get('/:hash', async (req, res, next) => {
   const { hash } = req.params
+
   if (!hash) {
     return res.status(400).send('Error: Hash parameter is missing')
   }
+
   try {
     const urlRecord = await prisma.url.findUnique({
       where: {
@@ -143,7 +146,6 @@ app.get('/:hash', async (req, res, next) => {
     return res.status(500).send('Error retrieving URL')
   }
 })
-
 
 const PORT = process.env.PORT || 3333
 app.listen(PORT, () => {
