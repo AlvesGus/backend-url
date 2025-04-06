@@ -65,7 +65,7 @@ app.get('/url/get-all', async (req, res) => {
 app.post('/url/create', async (req, res) => {
   const { url_original } = req.body
   const hash = generateShortUrl()
-  const base_url = 'https://backend-url-beta.vercel.app'
+  const base_url = 'http://localhost:3000'
 
   if (!url_original) {
     return res.status(400).send('Error: Missing original URL')
@@ -82,7 +82,7 @@ app.post('/url/create', async (req, res) => {
       data: {
         url_original,
         hash,
-        url_short
+        url_short: url_short
       },
       select: {
         id: true,
