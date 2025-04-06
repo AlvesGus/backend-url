@@ -7,6 +7,8 @@ app.use(express.json())
 app.use(
   cors({
     origin: 'http://localhost:3000',
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    AccessControlAllowOrigin: 'http://localhost:3000',
     methods: ['GET', 'POST', 'DELETE']
   })
 )
