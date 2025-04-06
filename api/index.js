@@ -35,7 +35,7 @@ app.get('/url/get/:hash', async (req, res) => {
     return res.status(400).send('Error: Hash parameter is missing')
   }
   try {
-    const urlRecord = await prisma.url.findUnique({
+    const urlRecord = await prisma.url.findFirst({
       where: {
         hash: hash
       }
