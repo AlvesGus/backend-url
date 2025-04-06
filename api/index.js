@@ -122,6 +122,29 @@ app.delete('/url/delete/:id', async (req, res) => {
   }
 })
 
+app.get('/:hash', async (req, res, next) => {
+  const { hash } = req.params
+  if (!hash) {
+    return res.status(400).send('Error: Hash parameter is missing')
+  }
+  try {
+    const urlRecord = await prisma.url.findUnique({
+      where: {
+        hash: hash
+      }
+    })
+    if (urlRecord) {
+      return res.redirect(urlRecord.url_original)
+    } else {
+      return res.status(404).send('Short URL not found')
+    }
+  } catch (error) {
+    console.error('Error retrieving URL:', error)
+    return res.status(500).send('Error retrieving URL')
+  }
+})
+
+
 const PORT = process.env.PORT || 3333
 app.listen(PORT, () => {
   console.log('Server is running on port ' + PORT)
