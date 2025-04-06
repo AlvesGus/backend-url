@@ -139,7 +139,7 @@ app.get('/:hash', async (req, res, next) => {
     if (urlRecord) {
       return res.redirect(urlRecord.url_original)
     } else {
-      return res.status(404).send('Short URL not found')
+      return res.status(404).send('Short URL page not found')
     }
   } catch (error) {
     console.error('Error retrieving URL:', error)
